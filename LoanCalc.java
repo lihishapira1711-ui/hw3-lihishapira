@@ -25,7 +25,8 @@ public class LoanCalc {
     public static double endBalance(double loan, double rate, int n, double payment) {
         double newbalance = loan;
         for (int i = 0; i < n; i++) {
-            newbalance = (newbalance * (1 + rate / 100)) - payment;
+            newbalance -= payment;
+            newbalance *=(1+(rate/100));
         }
         return newbalance;
     }
