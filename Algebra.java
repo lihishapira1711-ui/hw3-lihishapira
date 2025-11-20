@@ -24,34 +24,47 @@ public class Algebra {
     }  
 
     // Returns x1 + x2
-    public static int plus(int x1, int x2) {
-    while (x1>0)
+    public static int plus(int x1, int x2) 
     {
-        x2++;
-        x1--;
-    }
-    while (x1<0)
-    {
-        x2--;
-        x1++;
-    }
-    return x2;
-  }
+			if (x2 >=0)
+	    {
+			for (int i=0; i<x2 ; i++)
+			{
+			x1 ++;	
+	     	}
+        }
+            else 
+        {
+			for (int i=0; i>x2 ; i--)
+			{
+			x1 --;
+			}
+		}
+		return x1;
+	}
+
 
     // Returns x1 - x2
-    public static int minus(int x1, int x2) {
-        while (x2>0)
+    public static int minus(int x1, int x2)
+     {
+        	if (x2 >=0)
+	    {
+			for (int i=0; i<x2 ; i++)
+			{
+			x1 --;
+			}
+			
+		}
+		else
         {
-            x1--;
-            x2--;
-        }
-        while (x2<0)
-        {
-            x1++;
-            x2++;
-        }
-        return x1;
-    }
+		for (int i=0; i>x2 ; i--)
+			{
+			x1 ++;
+			}
+		}
+		return x1;
+	}
+   
 
     // Returns x1 * x2
     public static int times(int x1, int x2) {
@@ -62,12 +75,12 @@ public class Algebra {
         }
         if (x2<0)
         {
-            //x1 = -x1;
+            x1 = -x1;
             x2 = -x2;
-        for (int i = x2; i < 0 ; i--)
-        {
+          for (int i = x2; i > 0 ; i--)
+          {
             result = plus(result, x1);
-        }
+          }
         return result; 
         }
         
@@ -107,69 +120,103 @@ public class Algebra {
 
     // Returns the integer part of x1 / x2 
     public static int div(int x1, int x2) {
-        if (x2==0) {
-        System.err.println("Division by zero"); 
-        }
-        int count = 0 ;
-        int result = 0;
-        if (x1<x2)
-        {
+        int count = 0;
+        int x3 = 0; 
+        if(x1 == 0 || x2 == 0) 
+            {
             return 0;
-        }
-        if (x1==0)
-        {
-            return 0;
-        }
-        if (x1==x2)
-        {
-            return 1;
-        }
-        if (x2<0)
-        {
-            x2 = -x2;
-        }
-        if (x1<0)
-       {
-            x1= -x1;
-        }
-        while (result<x1)
-        {
-            result = plus(result, x2);
-            count++;
-        }
-        if(result>x1)
-        {
-          count= count-1;
+            }    
+        else if(x1 > 0 && x2 > 0) {
+            while(count < x1)
+            {
+                count = plus(count, x2);
+                x3 = plus(x3, 1);  
+            }       
 
+            if (x1 == count) {
+                return x3;
+            } else {
+                x3 = minus(x3, 1); 
+                return x3;
+            }
         }
-        return count;
+
+        else if(x1 > 0 && x2 < 0) {
+          
+            x2 = minus(0, x2);   
+            while(count < x1) {
+                count = plus(count, x2);
+                x3 = plus(x3, 1);
+            }       
+            
+            if (x1 == count) {
+                return minus(0, x3); 
+            } else {
+                x3 = minus(x3, 1); 
+                return minus(0, x3); 
+            }
+       }
+
+       
+        else if(x1 < 0 && x2 > 0) {
+          
+            int x1_abs = minus(0, x1); 
+                         
+            while(count < x1_abs) {
+                count = plus(count, x2);
+                x3 = plus(x3, 1);
+            }      
+
+            if (x1_abs == count) {
+                return minus(0, x3); 
+            } else { 
+                x3 = minus(x3, 1); 
+                return minus(0, x3); 
+            }
+        }
+ 
+        else { 
+           
+            x1 = minus(0, x1);
+            x2 = minus(0, x2);
+
+            while(count < x1) {
+                count = plus(count, x2);
+                x3 = plus(x3, 1);
+            }       
+
+            if (x1 == count) {
+                return x3; 
+            } else {
+                x3 = minus(x3, 1);
+                return x3; 
+            }
+        }
     }
 
     // Returns x1 % x2
-    public static int mod(int x1, int x2) {
-        if (x1<x2)
-        {
-            return x1;
-        }
-        if (x1==0)
-        {
-            return 0;
-        }
-        if (x1== x2)
-        {
-            return 1;
-        }
-        if (x2==0)
-        {
-            System.err.println("Division by zero"); 
-        }
-        int mody = div(x1, x2);
-        return mody;
+    public static int mod(int x1, int x2)
+    {
+
+         if (x2 == 0) {
+          
+           System.out.println("Division by zero");
+        }    
+       
+        int q = div(x1, x2); 
+
+        int x3 = minus(x1, times(q, x2));
+        
+        return x3;
     }   
 
     // Returns the integer part of sqrt(x) 
     public static int sqrt(int x) {
         int temp=0;
+        if (x==1)
+        {
+            return 1;
+        }
         for(int i=0 ; i<x ; i++)
         {
            temp = pow(i,2);
