@@ -25,11 +25,11 @@ public class LoanCalc {
     }
 
     public static double endBalance(double loan, double rate, int n, double payment) {
-        double balance = loan;
+        double newbalance = loan;
         for (int i = 0; i < n; i++) {
-            balance = (balance * (1 + rate / 100)) - payment;
+            newbalance = (newbalance * (1 + rate / 100)) - payment;
         }
-        return balance;
+        return newbalance;
     }
 
     public static double bruteForceSolver(double loan, double rate, int n, double epsilon) {
@@ -44,7 +44,7 @@ public class LoanCalc {
 
     public static double bisectionSolver(double loan, double rate, int n, double epsilon) {
         iterationCounter = 0;
-        return bisect(0.0, loan, loan, rate, n, epsilon); // ✅ גבול תחתון מתוקן
+        return bisect(0.0, loan, loan, rate, n, epsilon); 
     }
 
     private static double bisect(double low, double high, double loan, double rate, int n, double epsilon) {
