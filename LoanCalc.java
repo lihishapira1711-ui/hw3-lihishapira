@@ -14,13 +14,15 @@ public class LoanCalc {
 		int n = Integer.parseInt(args[2]);
 		System.out.println("Loan = " + loan + ", interest rate = " + rate + "%, periods = " + n);
         System.out.println();
+        System.out.println();
 		// Computes the periodical payment using brute force search
-		System.out.print("\nPeriodical payment, using brute force: ");
+		System.out.print("Periodical payment, using brute force: ");
 		System.out.println((int) bruteForceSolver(loan, rate, n, epsilon));
 		System.out.println("number of iterations: " + iterationCounter);
         System.out.println();
+        System.out.println();
 		// Computes the periodical payment using bisection search
-		System.out.print("\nPeriodical payment, using bi-section search: ");
+		System.out.print("Periodical payment, using bi-section search: ");
 		System.out.println((int) bisectionSolver(loan, rate, n, epsilon));
 		System.out.println("number of iterations: " + iterationCounter);
 	}
@@ -50,29 +52,29 @@ public class LoanCalc {
     }
     
  
-    public static double bisectionSolver(double loan, double rate, int n, double epsilon) 
-	{  
-      iterationCounter = 0;
-      double L = loan / n; 
-      double H = loan; 
-      double g = (L + H) / 2;
-
-       while ((H - L) > epsilon)
-	{
-
-      if (endBalance(loan, rate, n, g) > 0) 
-		{
-           L = g;
-        }     
-       else
-		{
-        H = g;
-        }
-        g = (L + H) / 2;
-        iterationCounter++;
+    public static double bisectionSolver(double loan, double rate, int n, double epsilon)
+    {
+    iterationCounter = 0;
+    return bisect(loan / n, loan, loan, rate, n, epsilon);
     }
-  
-	      return g;
+
+private static double bisect(double low, double high, double loan, double rate, int n, double epsilon) 
+{
+    double mid = (low + high) / 2.0;
+
+    if ((high - low) <= epsilon) {
+        return mid;
     }
-}    
+
+    iterationCounter++;
+
+    if (endBalance(loan, rate, n, mid) > 0) {
+        return bisect(mid, high, loan, rate, n, epsilon);
+    } else {
+        return bisect(low, mid, loan, rate, n, epsilon);
+    }
+}   
+
+
+}
    
